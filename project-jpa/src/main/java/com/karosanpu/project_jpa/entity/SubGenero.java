@@ -5,6 +5,7 @@ package com.karosanpu.project_jpa.entity;
 
 import java.time.LocalDateTime;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  * @author ksanchezpu Clase que representa el entity que mappea a la tabla de
@@ -32,10 +36,12 @@ public class SubGenero {
 	private String descripcion;
 
 	/**
-	 * ManyToOne si no se pone nada coloca automaticamente EAGER es igual que poner:ManyToOne(fetch = FetchType.EAGER) 
+	 * ManyToOne si no se pone nada coloca automaticamente EAGER es igual que
+	 * poner:ManyToOne(fetch = FetchType.EAGER)
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idGenero")
+	@Cascade(CascadeType.PERSIST)
 	private Genero genero;
 
 	@Column(name = "fechaCreacion")

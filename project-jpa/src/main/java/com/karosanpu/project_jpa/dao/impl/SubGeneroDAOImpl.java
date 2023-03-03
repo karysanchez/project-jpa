@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
@@ -24,7 +25,23 @@ public class SubGeneroDAOImpl implements SubGeneroDAO {
 
 	@Override
 	public void guardar(SubGenero subGenero) {
-		// TODO Auto-generated method stub
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+
+		EntityTransaction et = em.getTransaction();
+
+		try {
+			et.begin();
+			
+			em.persist(subGenero);
+			et.commit();
+		} catch (Exception e) {
+			if (et != null) {
+				et.rollback();
+			}
+		} finally {
+			
+		}
+		
 
 	}
 
@@ -44,7 +61,8 @@ public class SubGeneroDAOImpl implements SubGeneroDAO {
 	public List<SubGenero> consultar() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 
-		TypedQuery<SubGenero> queryTyped = (TypedQuery<SubGenero>) em.createQuery("FROM SubGenero ORDER BY descripcion");
+		TypedQuery<SubGenero> queryTyped = (TypedQuery<SubGenero>) em
+				.createQuery("FROM SubGenero ORDER BY descripcion");
 		return queryTyped.getResultList();
 	}
 
