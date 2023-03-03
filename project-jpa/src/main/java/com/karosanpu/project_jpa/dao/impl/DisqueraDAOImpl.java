@@ -16,7 +16,8 @@ import com.karosanpu.project_jpa.dao.DisqueraDAO;
 import com.karosanpu.project_jpa.entity.Disquera;
 
 /**
- * @author ksanchezpu Clase que implementa las transacciones para la tabla de
+ * @author ksanchezpu 
+ * Clase que implementa las transacciones para la tabla de
  *         Disquera.
  */
 public class DisqueraDAOImpl implements DisqueraDAO {
@@ -105,7 +106,8 @@ public class DisqueraDAOImpl implements DisqueraDAO {
 	public List<Disquera> consultar() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 
-		TypedQuery<Disquera> queryDisquera = (TypedQuery<Disquera>) em.createQuery("FROM Disquera ORDER BY descripcion");
+		TypedQuery<Disquera> queryDisquera = (TypedQuery<Disquera>) em
+				.createQuery("FROM Disquera ORDER BY descripcion");
 
 		return queryDisquera.getResultList();
 	}
@@ -123,6 +125,30 @@ public class DisqueraDAOImpl implements DisqueraDAO {
 
 		return disqueraConsultado;
 
+	}
+
+	@Override
+	public Disquera consultarByDescripcionJPQL(String descripcion) {
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+
+		TypedQuery<Disquera> queryDisquera = (TypedQuery<Disquera>) em
+				.createQuery("FROM Disquera WHERE descripcion = :desc ");
+
+		queryDisquera.setParameter("desc", descripcion);
+
+		return queryDisquera.getSingleResult();
+	}
+
+	@Override
+	public Disquera consultarByDescripcionNative(String descripcion) {
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+
+		TypedQuery<Disquera> queryDisquera = (TypedQuery<Disquera>) em
+				.createNativeQuery("SELECT * FROM disquera WHERE descripcion = :desc ", Disquera.class);
+
+		queryDisquera.setParameter("desc", descripcion);
+
+		return queryDisquera.getSingleResult();
 	}
 
 }
