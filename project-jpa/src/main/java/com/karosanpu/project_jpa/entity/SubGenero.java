@@ -38,10 +38,13 @@ public class SubGenero {
 	/**
 	 * ManyToOne si no se pone nada coloca automaticamente EAGER es igual que
 	 * poner:ManyToOne(fetch = FetchType.EAGER)
+	 * Para guardar a las dos tablas en cascada registro nuevo: Cascade(CascadeType.PERSIST)
+	 * Para actualizar las dos tablas en cascada: Cascade(CascadeType.MERGE)
+	 * Para eliminar las dos tablas en cascada: Cascade(CascadeType.REMOVE)
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idGenero")
-	@Cascade(CascadeType.PERSIST)
+	@Cascade(CascadeType.REMOVE)
 	private Genero genero;
 
 	@Column(name = "fechaCreacion")

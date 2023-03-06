@@ -34,12 +34,14 @@ public class SubGeneroDAOImpl implements SubGeneroDAO {
 			
 			em.persist(subGenero);
 			et.commit();
+			
 		} catch (Exception e) {
 			if (et != null) {
 				et.rollback();
 			}
-		} finally {
 			
+		} finally {
+			em.close();
 		}
 		
 
@@ -47,13 +49,49 @@ public class SubGeneroDAOImpl implements SubGeneroDAO {
 
 	@Override
 	public void actualizar(SubGenero subGenero) {
-		// TODO Auto-generated method stub
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+
+		EntityTransaction et = em.getTransaction();
+
+		try {
+			et.begin();
+			
+			em.merge(subGenero);
+			et.commit();
+			
+		} catch (Exception e) {
+			if (et != null) {
+				et.rollback();
+			}
+			
+		} finally {
+			em.close();
+		}
 
 	}
 
 	@Override
 	public void eliminar(Long id) {
-		// TODO Auto-generated method stub
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+
+		SubGenero subGeneroConsultado = em.find(SubGenero.class, id);
+		
+		EntityTransaction et = em.getTransaction();
+
+		try {
+			et.begin();
+			
+			em.remove(subGeneroConsultado);
+			et.commit();
+			
+		} catch (Exception e) {
+			if (et != null) {
+				et.rollback();
+			}
+			
+		} finally {
+			em.close();
+		}
 
 	}
 
@@ -68,8 +106,9 @@ public class SubGeneroDAOImpl implements SubGeneroDAO {
 
 	@Override
 	public SubGenero consultarById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+
+		return em.find(SubGenero.class, id);
 	}
 
 }

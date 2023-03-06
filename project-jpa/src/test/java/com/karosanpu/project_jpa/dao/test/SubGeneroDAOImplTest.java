@@ -6,12 +6,14 @@ package com.karosanpu.project_jpa.dao.test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import com.karosanpu.project_jpa.dao.SubGeneroDAO;
 import com.karosanpu.project_jpa.dao.impl.SubGeneroDAOImpl;
+import com.karosanpu.project_jpa.entity.Genero;
 import com.karosanpu.project_jpa.entity.SubGenero;
 
 /**
@@ -28,7 +30,19 @@ class SubGeneroDAOImplTest {
 	 */
 	@Test
 	void testGuardar() {
-		fail("Not yet implemented");
+		SubGenero subGenero = new SubGenero();
+		subGenero.setDescripcion("Hard Core");
+		subGenero.setFechaCreacion(LocalDateTime.now());
+		subGenero.setEstatus(true);
+
+		Genero genero = new Genero();
+		genero.setDescripcion("Metal");
+		genero.setFechaCreacion(LocalDateTime.now());
+		genero.setEstatus(true);
+		
+		subGenero.setGenero(genero);
+		
+		this.subGeneroDAO.guardar(subGenero);
 	}
 
 	/**
@@ -37,7 +51,14 @@ class SubGeneroDAOImplTest {
 	 */
 	@Test
 	void testActualizar() {
-		fail("Not yet implemented");
+		
+		SubGenero subGeneroConsultado = this.subGeneroDAO.consultarById(7L);
+		
+		subGeneroConsultado.setDescripcion("Trash Metal");
+		subGeneroConsultado.getGenero().setDescripcion("Metal Trash");
+		
+		this.subGeneroDAO.actualizar(subGeneroConsultado);
+		
 	}
 
 	/**
@@ -46,7 +67,7 @@ class SubGeneroDAOImplTest {
 	 */
 	@Test
 	void testEliminar() {
-		fail("Not yet implemented");
+		this.subGeneroDAO.eliminar(7L);
 	}
 
 	/**
